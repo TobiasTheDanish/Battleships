@@ -1,22 +1,28 @@
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 public class Main extends PApplet
 {
+    private Game game;
+
     public static void main(String[] args)
     {
-        PApplet.main(Main.class.getCanonicalName());
+        String[] processingArgs = {"Main"};
+        Main mySketch = new Main();
+        PApplet.runSketch(processingArgs, mySketch);
     }
 
     public void settings()
     {
         fullScreen();
+        this.g = new PGraphics();
+
+        game = new Game(this,8);
+        game.start();
     }
 
     public void draw()
     {
-        background(255);
-        fill(0);
-        rectMode(CENTER);
-        rect(width/2, height/2, width/2, height/2);
+        game.run();
     }
 }

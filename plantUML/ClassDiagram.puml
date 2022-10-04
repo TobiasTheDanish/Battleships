@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class Main{
+    -Game game
+    +void settings()
+    +void draw()
+}
+
+class Game{
+    -DisplayMap battleMap
+    -PlayerMap playerMap
+    -PlayerMap npcMap
+
+    +Game(int boardSize)
+    +void run()
+}
+
+class PlayerMap {
+    T == Integer
+    +PlayerMap(int boardSize)
+}
+
+
+class DisplayMap{
+    T == String
+
+    +DisplayMap(int boardSize, int tileSize)
+    +void display()
+}
+
+abstract class BattleMap<T>{
+    {abstract} #T[][] map
+    {abstract} +void updateMap(Coordinate coordinate)
+    {abstract} #T[][] initMap(int boardSize, int tileSize)
+}
+
+class UserInput{
+}
+
+class Displayer{
+}
+
+note top of Coordinate : Used for a simple\nrepresentation of\ncoordinates
+class Coordinate
+{
+    +int x
+    +int y
+    +Coordinate(int x, int y)
+}
+
+Main --> Game
+Game -> UserInput
+Game -> Displayer
+
+Game --> PlayerMap
+Game --> DisplayMap
+
+PlayerMap --|> BattleMap
+DisplayMap --|> BattleMap
+BattleMap -> Coordinate
+@enduml
